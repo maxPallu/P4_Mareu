@@ -1,27 +1,26 @@
 package com.lamzone.mareu;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ImageButton;
+import android.widget.DatePicker;
 import android.widget.SearchView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lamzone.mareu.DI.DI;
-import com.lamzone.mareu.service.MeetingAPI;
 import com.lamzone.mareu.view.MeetingAdapter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,10 +30,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static android.view.MotionEvent.AXIS_X;
-import static android.view.MotionEvent.AXIS_Y;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private FloatingActionButton addMeeting;
 
@@ -130,53 +126,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.trier_jour:
-                sortDay();
-                mAdapter.notifyDataSetChanged();
-                return true;
-            case R.id.trier_mois:
-                sortMonth();
-                mAdapter.notifyDataSetChanged();
-                return true;
-            case R.id.trier_annee:
-                sortYear();
-                mAdapter.notifyDataSetChanged();
+            case R.id.trier_date:
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getSupportFragmentManager(), "datePicker");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void sortDay() {
-        Collections.sort(mMeetings, new Comparator<Meeting>() {
-            @Override
-            public int compare(Meeting o1, Meeting o2) {
-                return Integer.valueOf(o1.getJour()).compareTo(Integer.valueOf(o2.getJour()));
-            }
-        });
-    }
 
-    private void sortMonth() {
-        Collections.sort(mMeetings, new Comparator<Meeting>() {
-            @Override
-            public int compare(Meeting o1, Meeting o2) {
-                return Integer.valueOf(o1.getMois()).compareTo(Integer.valueOf(o2.getMois()));
-            }
-        });
-    }
-
-    private void sortYear() {
-        Collections.sort(mMeetings, new Comparator<Meeting>() {
-            @Override
-            public int compare(Meeting o1, Meeting o2) {
-                return Integer.valueOf(o1.getAnnee()).compareTo(Integer.valueOf(o2.getAnnee()));
-            }
-        });
-    }
 
     @Subscribe
     public void onDeleteNeighbour(DeleteMeetingEvent event) {
         DI.getMeetingApiService().deleteMeeting(event.meeting);
         onResume();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        int annees = year;
+        int mois = month+1;
+        int jour = dayOfMonth;
     }
 }

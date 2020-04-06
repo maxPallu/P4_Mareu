@@ -2,13 +2,9 @@ package com.lamzone.mareu;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.DatePicker;
 
 import androidx.fragment.app.DialogFragment;
-
-import com.lamzone.mareu.view.MeetingAdapter;
 
 import java.util.Calendar;
 
