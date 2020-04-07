@@ -1,6 +1,7 @@
 package com.lamzone.mareu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.MenuPopupWindow;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.DialogFragment;
@@ -17,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.DatePicker;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.SearchView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,17 +29,26 @@ import com.lamzone.mareu.view.MeetingAdapter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, Filterable {
 
     private FloatingActionButton addMeeting;
 
     private MeetingAdapter mAdapter;
     private List<Meeting> mMeetings;
+    private List<Meeting> mMeetingsFiltered;
     private RecyclerView recyclerView;
+
+    private int annees;
+    private int mois;
+    private int jour;
 
     @Override
     protected void onStart() {
@@ -123,6 +135,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         return true;
     }
 
+    @Subscribe
+    public void onDeleteNeighbour(DeleteMeetingEvent event) {
+        DI.getMeetingApiService().deleteMeeting(event.meeting);
+        onResume();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -135,18 +153,48 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        annees = year;
+        mois = month+1;
+        jour = dayOfMonth;
 
-
-    @Subscribe
-    public void onDeleteNeighbour(DeleteMeetingEvent event) {
-        DI.getMeetingApiService().deleteMeeting(event.meeting);
-        onResume();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date meetingDate = new Date(annees, mois, jour);
+        String dateToCompare = df.format(meetingDate);
+        getFilter().filter(dateToCompare);
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        int annees = year;
-        int mois = month+1;
-        int jour = dayOfMonth;
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<Meeting> filteredList = new ArrayList<>();
+                mMeetingsFiltered = DI.getMeetingApiService().getMeetings();
+                if (constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(mMeetingsFiltered);
+                } else {
+                    String filterPattern = constraint.toString().trim();
+
+                    for (Meeting meeting : mMeetingsFiltered) {
+                        if (meeting.getDate().contains(filterPattern)) {
+                            filteredList.add(meeting);
+                        }
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mMeetings.clear();
+                mMeetings.addAll((List) results.values);
+                mAdapter.notifyDataSetChanged();
+            }
+        };
     }
 }

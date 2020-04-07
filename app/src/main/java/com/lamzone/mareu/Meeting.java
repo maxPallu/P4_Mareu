@@ -1,6 +1,8 @@
 package com.lamzone.mareu;
 
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Meeting {
 
@@ -62,5 +64,12 @@ public class Meeting {
 
     public int getJour() {
         return jour;
+    }
+
+    public String getDate() {
+        Date meeting_date = new Date(annee, mois, jour);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String meetingDate = df.format(meeting_date);
+        return meetingDate;
     }
 }
