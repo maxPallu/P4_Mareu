@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private FloatingActionButton addMeeting;
 
     private MeetingAdapter mAdapter;
+    private AddMeeting mAddMeeting;
     private List<Meeting> mMeetings;
     private List<Meeting> mMeetingsFiltered;
     private RecyclerView recyclerView;

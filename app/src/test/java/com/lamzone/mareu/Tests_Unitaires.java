@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 public class Tests_Unitaires {
 
     public MeetingAPI mAPI;
-    Meeting meeting = new Meeting(" ", " ", 2020, 03, 31, 17, 20, " ");
+    Meeting meeting = new Meeting("Test", " ", 2020, 03, 31, 17, 20, " ");
 
     @Before
     public void setup() {
@@ -31,5 +31,15 @@ public class Tests_Unitaires {
     public void deleteMeetingWithSuccess() {
         mAPI.deleteMeeting(meeting);
         assertFalse(mAPI.getMeetings().contains(meeting));
+    }
+
+    @Test
+    public void filterByPlace() {
+
+    }
+
+    @Test
+    public void filterByDate() {
+
     }
 }

@@ -9,8 +9,7 @@
 
         <menu>
             <item android:id="@+id/trier_date"
-                android:title="Date"
-                app:actionViewClass="android.widget.Button">
+                android:title="Date">
             </item>
 
             <item android:id="@+id/trier_lieu"
