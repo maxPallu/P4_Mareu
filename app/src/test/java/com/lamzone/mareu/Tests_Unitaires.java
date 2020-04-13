@@ -35,11 +35,11 @@ public class Tests_Unitaires {
 
     @Test
     public void filterByPlace() {
-
+        assertTrue(mAPI.getMeetings().get(mAPI.getMeetings().indexOf(meeting)).getPlace().contains("Test"));
     }
 
     @Test
     public void filterByDate() {
-
+        assertTrue(mAPI.getMeetings().get(mAPI.getMeetings().indexOf(meeting)).getDate().contains("31/3/2020"));
     }
 }

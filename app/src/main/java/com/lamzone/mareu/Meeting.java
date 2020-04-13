@@ -2,7 +2,9 @@ package com.lamzone.mareu;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Meeting {
 
@@ -21,6 +23,8 @@ public class Meeting {
     private int mois;
 
     private int jour;
+
+    private String date;
 
     public Meeting(String place, String topic, int annee, int mois, int jour, int hour, int minutes, String participants) {
 
@@ -67,9 +71,7 @@ public class Meeting {
     }
 
     public String getDate() {
-        Date meeting_date = new Date(annee, mois, jour);
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String meetingDate = df.format(meeting_date);
-        return meetingDate;
+        date = jour+"/"+"0"+mois+"/"+annee;
+        return date;
     }
 }

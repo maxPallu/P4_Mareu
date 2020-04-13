@@ -1,5 +1,6 @@
 package com.lamzone.mareu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.MenuPopupWindow;
 import androidx.appcompat.widget.Toolbar;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +34,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -143,6 +146,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mMeetings.clear();
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.trier_date:
@@ -157,12 +168,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         annees = year;
-        mois = month+1;
+        mois = month;
         jour = dayOfMonth;
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        Date meetingDate = new Date(annees, mois, jour);
-        String dateToCompare = df.format(meetingDate);
+        Calendar c = Calendar.getInstance();
+        c.set(annees, mois ,jour);
+        Date date = c.getTime();
+        String dateToCompare = df.format(date);
         getFilter().filter(dateToCompare);
     }
 
