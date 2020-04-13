@@ -15,7 +15,8 @@
             android:exported="true"></service>
 
         <activity android:name=".AddMeeting" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
