@@ -6,6 +6,7 @@ import android.widget.EditText;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -93,14 +94,14 @@ public class Tests_Instrumentalises {
         onView(ViewMatchers.withId(R.id.add_meeting_button)).perform(click());
         onView(ViewMatchers.withId(R.id.meetingPlace)).perform(typeText("Test"));
         onView(ViewMatchers.withId(R.id.date_picker)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(setDate(2020, 04, 7));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(setDate(2020, 04, 20));
         onView(withId(android.R.id.button1)).perform(click());
         onView(ViewMatchers.withId(R.id.valider)).perform(click());
         //Ajoute une deuxième réunion
         onView(ViewMatchers.withId(R.id.add_meeting_button)).perform(click());
         onView(ViewMatchers.withId(R.id.meetingPlace)).perform(typeText("Salle B"));
         onView(ViewMatchers.withId(R.id.date_picker)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(setDate(2020, 04, 8));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(setDate(2020, 04, 21));
         onView(withId(android.R.id.button1)).perform(click());
         onView(ViewMatchers.withId(R.id.valider)).perform(click());
         //Filtre par date
@@ -110,7 +111,7 @@ public class Tests_Instrumentalises {
                 .inAdapterView(CoreMatchers.<View>instanceOf(MenuPopupWindow.MenuDropDownListView.class))
                 .atPosition(0)
                 .perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(setDate(2020, 04, 7));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(setDate(2020, 04, 21));
         onView(withId(android.R.id.button1)).perform(click());
         onView(ViewMatchers.withId(R.id.Recyclerview)).check(matches(hasMinimumChildCount(1)));
     }

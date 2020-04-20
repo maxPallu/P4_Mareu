@@ -40,6 +40,6 @@ public class Tests_Unitaires {
 
     @Test
     public void filterByDate() {
-        assertTrue(mAPI.getMeetings().get(mAPI.getMeetings().indexOf(meeting)).getDate().contains("31/3/2020"));
+        assertTrue(mAPI.getMeetings().get(mAPI.getMeetings().indexOf(meeting)).getDate().contains("31/03/2020"));
     }
 }
