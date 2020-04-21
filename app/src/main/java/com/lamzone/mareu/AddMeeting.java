@@ -3,8 +3,11 @@ package com.lamzone.mareu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
@@ -70,8 +73,9 @@ public class AddMeeting extends AppCompatActivity implements DatePickerDialog.On
 
     @OnClick(R.id.valider)
     public void addMeeting() {
-
-        mMeeting = new Meeting(placeInput.getText().toString(), topicInput.getText().toString(), annees, mois, jour, hour, minutes, participantsInput.getText().toString());
+        try {
+            mMeeting = new Meeting(placeInput.getText().toString(), topicInput.getText().toString(), annees, mois, jour, hour, minutes, participantsInput.getText().toString());
+        } catch (MeetingException e) { }
         mMeetingAPI.createMeeting(mMeeting);
         finish();
     }

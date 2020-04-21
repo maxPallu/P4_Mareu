@@ -1,12 +1,14 @@
 package com.lamzone.mareu;
 
+import android.app.Activity;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class Meeting {
+public class Meeting extends Activity {
 
     private String place;
 
@@ -26,16 +28,21 @@ public class Meeting {
 
     private String date;
 
-    public Meeting(String place, String topic, int annee, int mois, int jour, int hour, int minutes, String participants) {
+    public Meeting(String place, String topic, int annee, int mois, int jour, int hour, int minutes, String participants) throws MeetingException {
 
-        this.place = place;
-        this.topic = topic;
-        this.annee = annee;
-        this.mois = mois;
-        this.jour = jour;
-        this.hour = hour;
-        this.minutes = minutes;
-        this.participants = participants;
+        if(place.equals("") || topic.equals("")) {
+            throw new MeetingException();
+        }
+        else {
+            this.place = place;
+            this.topic = topic;
+            this.annee = annee;
+            this.mois = mois;
+            this.jour = jour;
+            this.hour = hour;
+            this.minutes = minutes;
+            this.participants = participants;
+        }
     }
 
     public int getAnnee() {
