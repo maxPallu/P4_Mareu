@@ -30,7 +30,7 @@ public class Meeting extends Activity {
 
     public Meeting(String place, String topic, int annee, int mois, int jour, int hour, int minutes, String participants) throws MeetingException {
 
-        if(place.equals("") || topic.equals("")) {
+        if(place.equals("") || topic.equals("") || participants.equals("")) {
             throw new MeetingException();
         }
         else {

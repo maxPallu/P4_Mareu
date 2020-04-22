@@ -9,8 +9,7 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#B35B5B"
-        android:tint="#B35B5B"
+        android:backgroundTint="#FAF3C9"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
