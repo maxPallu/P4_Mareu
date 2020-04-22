@@ -2,6 +2,7 @@ package com.lamzone.mareu;
 
 import com.lamzone.mareu.DI.DI;
 import com.lamzone.mareu.service.MeetingAPI;
+import com.lamzone.mareu.view.MeetingAdapter;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,16 @@ import static org.junit.Assert.assertTrue;
 public class Tests_Unitaires {
 
     public MeetingAPI mAPI;
-    Meeting meeting = new Meeting("Test", " ", 2020, 03, 31, 17, 20, " ");
+    public MeetingAdapter mAdapter;
+    Meeting meeting;
+
+    {
+        try {
+            meeting = new Meeting("Test", "Test", 2020, 03, 31, 17, 20, " ");
+        } catch (MeetingException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Before
     public void setup() {
@@ -35,7 +45,9 @@ public class Tests_Unitaires {
 
     @Test
     public void filterByPlace() {
-        assertTrue(mAPI.getMeetings().get(mAPI.getMeetings().indexOf(meeting)).getPlace().contains("Test"));
+        //TODO
+        mAdapter.getFilter().filter(meeting.getPlace());
+        assertTrue(mAPI.getMeetings().contains(meeting));
     }
 
     @Test

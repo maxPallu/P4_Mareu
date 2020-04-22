@@ -5,31 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#B35B5B"
+        android:tint="#B35B5B"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/meeting_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="25dp"
+        android:text="TEST"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/meeting_topic"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toEndOf="@id/floatingActionButton" />
 
     <TextView
         android:id="@+id/meeting_date"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="5dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:textSize="20dp"
+        android:text="20/03/2020"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/meeting_topic"
-        app:layout_constraintStart_toEndOf="@id/meeting_place"/>
+        app:layout_constraintStart_toEndOf="@id/meeting_place" />
 
     <TextView
         android:id="@+id/meeting_hour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
+        android:text="05H30"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/meeting_date"
@@ -42,6 +55,7 @@
         android:layout_marginStart="5dp"
         android:ellipsize="end"
         android:gravity="center_horizontal"
+        android:text="TEST"
         android:lines="1"
         android:textSize="20dp"
         android:textStyle="bold"

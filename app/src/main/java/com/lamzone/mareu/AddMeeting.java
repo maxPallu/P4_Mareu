@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -33,6 +34,9 @@ public class AddMeeting extends AppCompatActivity implements DatePickerDialog.On
     private Meeting mMeeting;
     private MeetingAPI mMeetingAPI;
 
+    private TextView date;
+    private TextView time;
+
     private int hour;
     private int minutes;
     private int annees;
@@ -46,6 +50,9 @@ public class AddMeeting extends AppCompatActivity implements DatePickerDialog.On
         ButterKnife.bind(this);
         mMeetingAPI = DI.getMeetingApiService();
 
+        date = findViewById(R.id.displayDate);
+        time = findViewById(R.id.displayTime);
+
     }
 
     public void showTimePickerDialog(View v) {
@@ -57,6 +64,7 @@ public class AddMeeting extends AppCompatActivity implements DatePickerDialog.On
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         hour = hourOfDay;
         minutes = minute;
+        time.setText(hour+"H"+minutes);
     }
 
     public void showDatePickerDialog(View v) {
@@ -69,14 +77,23 @@ public class AddMeeting extends AppCompatActivity implements DatePickerDialog.On
         annees = year;
         mois = month+1;
         jour = dayOfMonth;
+        date.setText(jour+"/"+mois+"/"+annees);
     }
 
     @OnClick(R.id.valider)
     public void addMeeting() {
         try {
-            mMeeting = new Meeting(placeInput.getText().toString(), topicInput.getText().toString(), annees, mois, jour, hour, minutes, participantsInput.getText().toString());
-        } catch (MeetingException e) { }
-        mMeetingAPI.createMeeting(mMeeting);
+            mMeeting = new Meeting(placeInput.getText().toString(), topicInput.getText().toString(), annees, mois, jour, hour, minutes,
+                    participantsInput.getText().toString());
+            mMeetingAPI.createMeeting(mMeeting);
+        } catch (MeetingException e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Attention !")
+                    .setMessage("Vous ne pouvez pas créer de réunion vide !")
+                    .create()
+                    .show();
+        }
+
         finish();
     }
 }
