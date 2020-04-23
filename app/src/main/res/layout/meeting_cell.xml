@@ -7,8 +7,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="43dp"
+        android:layout_height="48dp"
         android:backgroundTint="#FAF3C9"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -65,8 +65,9 @@
         android:id="@+id/meeting_participants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="48dp"
         android:gravity="center"
+        android:text="TEST"
         android:textSize="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/meeting_place" />
