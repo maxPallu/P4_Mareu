@@ -3,6 +3,7 @@ package com.lamzone.mareu;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
@@ -26,6 +27,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.PickerActions.setDate;
+import static androidx.test.espresso.contrib.PickerActions.setTime;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
@@ -49,6 +51,12 @@ public class Tests_Instrumentalises {
     public void addMeetingWithSuccess() {
         onView(ViewMatchers.withId(R.id.add_meeting_button)).perform(click());
         onView(ViewMatchers.withId(R.id.meetingPlace)).perform(typeText("Test"));
+        onView(ViewMatchers.withId(R.id.date_picker)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(setDate(2020, 04, 20));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(ViewMatchers.withId(R.id.time_picker)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(setTime(14, 30));
+        onView(withId(android.R.id.button1)).perform(click());
         onView(ViewMatchers.withId(R.id.meetingTopic)).perform(typeText("Test"));
         onView(ViewMatchers.withId(R.id.meetingParticipants)).perform(typeText("Test"));
         onView(ViewMatchers.withId(R.id.valider)).perform(click());
@@ -58,13 +66,8 @@ public class Tests_Instrumentalises {
 
     @Test
     public void deleteItemWithSuccess() {
-       onView(ViewMatchers.withId(R.id.add_meeting_button)).perform(click());
-        onView(ViewMatchers.withId(R.id.meetingPlace)).perform(typeText("Test"));
-        onView(ViewMatchers.withId(R.id.meetingTopic)).perform(typeText("Test"));
-        onView(ViewMatchers.withId(R.id.meetingParticipants)).perform(typeText("Test"));
-       onView(ViewMatchers.withId(R.id.valider)).perform(click());
-       onView(ViewMatchers.withId(R.id.item_list_delete_button)).perform(click());
-       onView(ViewMatchers.withId(R.id.Recyclerview)).check(matches(hasMinimumChildCount(0)));
+       addMeetingWithSuccess();
+        onView(ViewMatchers.withId(R.id.Recyclerview)).check(matches(hasMinimumChildCount(0)));
     }
 
     @Test
@@ -72,12 +75,24 @@ public class Tests_Instrumentalises {
         //Ajoute une première réunion
         onView(ViewMatchers.withId(R.id.add_meeting_button)).perform(click());
         onView(ViewMatchers.withId(R.id.meetingPlace)).perform(typeText("Test"));
+        onView(ViewMatchers.withId(R.id.date_picker)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(setDate(2020, 04, 20));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(ViewMatchers.withId(R.id.time_picker)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(setTime(14, 30));
+        onView(withId(android.R.id.button1)).perform(click());
         onView(ViewMatchers.withId(R.id.meetingTopic)).perform(typeText("Test"));
         onView(ViewMatchers.withId(R.id.meetingParticipants)).perform(typeText("Test"));
         onView(ViewMatchers.withId(R.id.valider)).perform(click());
         //Ajoute une deuxième réunion
         onView(ViewMatchers.withId(R.id.add_meeting_button)).perform(click());
         onView(ViewMatchers.withId(R.id.meetingPlace)).perform(typeText("Salle B"));
+        onView(ViewMatchers.withId(R.id.date_picker)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(setDate(2020, 04, 20));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(ViewMatchers.withId(R.id.time_picker)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(setTime(14, 30));
+        onView(withId(android.R.id.button1)).perform(click());
         onView(ViewMatchers.withId(R.id.meetingTopic)).perform(typeText("Test"));
         onView(ViewMatchers.withId(R.id.meetingParticipants)).perform(typeText("Test"));
         onView(ViewMatchers.withId(R.id.valider)).perform(click());
@@ -104,6 +119,9 @@ public class Tests_Instrumentalises {
         onView(ViewMatchers.withId(R.id.date_picker)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(setDate(2020, 04, 20));
         onView(withId(android.R.id.button1)).perform(click());
+        onView(ViewMatchers.withId(R.id.time_picker)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(setTime(14, 30));
+        onView(withId(android.R.id.button1)).perform(click());
         onView(ViewMatchers.withId(R.id.valider)).perform(click());
         //Ajoute une deuxième réunion
         onView(ViewMatchers.withId(R.id.add_meeting_button)).perform(click());
@@ -112,6 +130,9 @@ public class Tests_Instrumentalises {
         onView(ViewMatchers.withId(R.id.meetingParticipants)).perform(typeText("Test"));
         onView(ViewMatchers.withId(R.id.date_picker)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(setDate(2020, 04, 21));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(ViewMatchers.withId(R.id.time_picker)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(setTime(14, 30));
         onView(withId(android.R.id.button1)).perform(click());
         onView(ViewMatchers.withId(R.id.valider)).perform(click());
         //Filtre par date

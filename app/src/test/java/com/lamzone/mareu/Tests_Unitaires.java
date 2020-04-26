@@ -11,9 +11,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class Tests_Unitaires {
@@ -36,13 +34,12 @@ public class Tests_Unitaires {
     @Before
     public void setup() {
         mAPI = DI.getMeetingApiService();
-        mMeetings.add(meeting);
-        mMeetings.add(meeting2);
     }
 
     @Test
     public void addMeetingWithSuccess() {
-        assertTrue(mMeetings.contains(meeting));
+        mAPI.createMeeting(meeting);
+        assertTrue(mAPI.getMeetings().contains(meeting));
     }
 
     @Test
